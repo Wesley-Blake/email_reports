@@ -1,7 +1,7 @@
-import win32com.client
-import pandas as pd
 from pathlib import Path
 from datetime import datetime
+import win32com.client
+import pandas as pd
 
 
 SAVE_DIR = Path.home() / 'Downloads' / 'email_reports'
