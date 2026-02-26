@@ -45,7 +45,7 @@ def check_csv() -> None:
         for header in headers:
             if 'camp' in header.lower():
                 if any(df[header] == 2):
-                    df[df[header] == 2].to_csv(file,index=False)
+                    df[df[header] == 2].to_csv(file, index=False)
                     break
                 else:
                     delete = True
