@@ -19,11 +19,15 @@ def collect_csv() -> None:
     inbox = namespace.GetDefaultFolder(6)
     subfolder = inbox.Folders['email_reports']
 
+    index = 0
     messages = subfolder.Items
-    for message in messages:
+    while index < len(messages):
+    #for message in messages:
+        message = messages[index]
         # These messages are just on repeat, I don't want the same document over and again.
         if message.ReceivedTime.date() < TODAY:
             message.Delete()
+            messages = subfolder.Items
             continue
 
         attachment_count = message.Attachments.Count
@@ -35,6 +39,9 @@ def collect_csv() -> None:
                     attachment.SaveAsFile(file_path)
         else:
             message.Delete()
+            messages = subfolder.Items
+            continue
+        index += 1
 
 def check_csv() -> None:
     total = 0
