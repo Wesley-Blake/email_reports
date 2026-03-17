@@ -22,7 +22,6 @@ def collect_csv() -> None:
     index = 0
     messages = subfolder.Items
     while index < len(messages):
-    #for message in messages:
         message = messages[index]
         # These messages are just on repeat, I don't want the same document over and again.
         if message.ReceivedTime.date() < TODAY:
