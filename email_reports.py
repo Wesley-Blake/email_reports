@@ -6,10 +6,12 @@ import pandas as pd
 
 SAVE_DIR = Path.home() / 'Downloads' / 'email_reports'
 
+
 def clear_reports_dir() -> None:
     SAVE_DIR.mkdir(parents=True, exist_ok=True)
     for file in SAVE_DIR.iterdir():
         file.unlink()
+
 
 def collect_csv() -> None:
     TODAY = datetime.now().date()
@@ -23,7 +25,6 @@ def collect_csv() -> None:
     messages = subfolder.Items
     while index < len(messages):
         message = messages[index]
-        # These messages are just on repeat, I don't want the same document over and again.
         if message.ReceivedTime.date() < TODAY:
             message.Delete()
             messages = subfolder.Items
@@ -41,6 +42,7 @@ def collect_csv() -> None:
             messages = subfolder.Items
             continue
         index += 1
+
 
 def check_csv() -> None:
     total = 0
@@ -61,6 +63,7 @@ def check_csv() -> None:
         else:
             total += 1
     print(f"Total number of reports need attention: {total}")
+
 
 def main():
     clear_reports_dir()
