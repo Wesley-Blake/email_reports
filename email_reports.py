@@ -62,7 +62,7 @@ def check_csv() -> None:
             file.unlink()
         else:
             total += 1
-    print(f"Total number of reports need attention: {total}")
+    input(f"Total number of reports need attention: {total}")
 
 
 def main():
