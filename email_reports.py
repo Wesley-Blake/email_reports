@@ -4,7 +4,7 @@ import win32com.client
 import pandas as pd
 
 
-SAVE_DIR = Path.home() / 'Downloads' / 'email_reports'
+SAVE_DIR = Path.home() / "Downloads" / "email_reports"
 
 
 def clear_reports_dir() -> None:
@@ -19,7 +19,7 @@ def collect_csv() -> None:
     namespace = outlook.GetNamespace("MAPI")
 
     inbox = namespace.GetDefaultFolder(6)
-    subfolder = inbox.Folders['email_reports']
+    subfolder = inbox.Folders["email_reports"]
 
     index = 0
     messages = subfolder.Items
@@ -34,7 +34,7 @@ def collect_csv() -> None:
         if attachment_count > 0:
             for i in range(1, attachment_count + 1):
                 attachment = message.Attachments.Item(i)
-                if attachment.FileName.endswith('.csv'):
+                if attachment.FileName.endswith(".csv"):
                     file_path = SAVE_DIR / attachment.FileName
                     attachment.SaveAsFile(file_path)
         else:
@@ -51,7 +51,7 @@ def check_csv() -> None:
         df = pd.read_csv(file)
         headers = df.columns
         for header in headers:
-            if 'camp' in header.lower():
+            if "camp" in header.lower():
                 if any(df[header] == 2):
                     df[df[header] == 2].to_csv(file, index=False)
                     break
@@ -71,5 +71,5 @@ def main():
     check_csv()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
