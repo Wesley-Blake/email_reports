@@ -71,7 +71,13 @@ def collect_csv() -> None:
         for index in range(1, attachments.Count + 1):
             attachment = attachments.Item(index)
             if attachment.FileName.lower().endswith(".csv"):
-                attachment.SaveAsFile(SAVE_DIR / attachment.FileName)
+                # Strip any directory components so a crafted attachment
+                # filename (e.g. "..\..\evil.csv" or an absolute path)
+                # can't write outside SAVE_DIR.
+                safe_name = Path(attachment.FileName).name
+                if not safe_name:
+                    continue
+                attachment.SaveAsFile(SAVE_DIR / safe_name)
                 saved_any_csv = True
 
         if not saved_any_csv:
